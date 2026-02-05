@@ -2,11 +2,8 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/tmp" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/../dc2f-common" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/../dc2f-edit-api" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/../dc2f-edit-api/deps/dc2f.kt" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/../dc2f-edit-api/tools/dc2f-site-gh-pages" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/../dc2f.kt" vcs="Git" />
   </component>
 </project>
