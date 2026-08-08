@@ -10,27 +10,37 @@ group = "app.anlage.site"
 version = "0.0.1-SNAPSHOT"
 
 
-tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = "1.8"
-    // "enable" was removed in Kotlin 1.5; "all" is the closest equivalent.
-    kotlinOptions.freeCompilerArgs = listOf("-Xjvm-default=all")
-}
-
-
-
 plugins {
     // Apply the Kotlin JVM plugin to add support for Kotlin on the JVM.
-    kotlin("jvm") version "1.9.25"
+    kotlin("jvm") version "2.4.10"
     //kotlin("kapt") version "1.3.20"
-    id("io.ratpack.ratpack-java").version("1.8.0")
+    // io.ratpack.ratpack-java removed: every release of it calls the `compile`
+    // configuration, which Gradle dropped in 7.0. This project never used
+    // ratpack directly -- it arrives transitively via dc2f-edit-api, which now
+    // declares ratpack-core itself.
 
     // Apply the application plugin to add support for building a CLI application.
     application
 }
 
+tasks.withType<KotlinCompile> {
+    // kotlinOptions was removed in Kotlin 2.2; compilerOptions replaces it, and
+    // -Xjvm-default became -jvm-default ("no-compatibility" == the old "all").
+    compilerOptions {
+        freeCompilerArgs.add("-jvm-default=no-compatibility")
+    }
+}
+
+// Pins both the Java and Kotlin targets together, and must sit after the
+// plugins block since `kotlin { }` is an extension the Kotlin plugin adds.
+kotlin {
+    jvmToolchain(17)
+}
+
 allprojects {
     repositories {
-        jcenter()
+        // jcenter() dropped: shut down in 2021 and removed in Gradle 9.
+        mavenCentral()
         maven("https://jitpack.io")
         maven("https://oss.sonatype.org/content/groups/public/")
     }
@@ -45,9 +55,8 @@ allprojects {
 //}
 
 repositories {
-    // Use jcenter for resolving your dependencies.
-    // You can declare any Maven/Ivy/file repository here.
-    jcenter()
+    // jcenter() dropped: shut down in 2021 and removed in Gradle 9.
+    mavenCentral()
 }
 
 dependencies {
@@ -82,17 +91,15 @@ dependencies {
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit")
 }
 
-if (gradle.startParameter.isContinuous) {
-    tasks.named<ratpack.gradle.continuous.RatpackContinuousRun>("run") {
-        flattenClassloaders = true
-//        jvmArgs = listOf("--add-opens java.base/java.lang=ALL-UNNAMED",
-//          "--add-opens java.base/java.util=ALL-UNNAMED")
-    }
-}
+// The RatpackContinuousRun block that lived here went with the plugin. It only
+// set flattenClassloaders for `gradle -t run`, i.e. `dc2f.sh serve`. The server
+// still watches web/content itself, so content edits reload as before; a change
+// to Kotlin sources now needs a restart.
 
 application {
     // Define the main class for the application.
-    mainClassName = "app.authpass.website.WebsiteKt"
+    // mainClassName was removed in Gradle 8.
+    mainClass.set("app.authpass.website.WebsiteKt")
 //    applicationDefaultJvmArgs =
 //      listOf("--add-opens java.base/java.lang=ALL-UNNAMED",
 //        "--add-opens java.base/java.util=ALL-UNNAMED")
