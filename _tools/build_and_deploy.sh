@@ -18,7 +18,14 @@ if test -z "${DRY_RUN}" ; then
 fi
 
 
-./_tools/gh-pages-deploy.sh
+# Disabled: the gh-pages deploy key is rejected by GitHub
+# ("Permission denied (publickey)"), so this aborted the script under `set -e`
+# *after* the site had already gone live -- rsync and the Cloudflare purge both
+# succeed, then the deploy reports exit 128. The branch is a vestigial mirror:
+# it has no CNAME, so it never served authpass.app, and it last updated in
+# January 2024 while the live site moved on. Re-add once the deploy key is
+# re-established, or drop it for good. (Same change as codeux.design.)
+#./_tools/gh-pages-deploy.sh
 
 
 # Disabled: Google retired the sitemaps ping endpoint in 2023 and it now 404s,
