@@ -7,6 +7,12 @@ author: 'Herbert Poul'
 teaser: authpass-platform-composition.png
 title: 'Store your Keepass password file in NextCloud'
 slug: store-keepass-passwords-nextcloud-webdav
+# Previous slug, live until the rename and still 404ing. Emits a redirect
+# stub so old links, bookmarks and search results keep working.
+renderPathAliases:
+  # Trailing slash is required: parseLeafPath treats a slashless final
+  # component as a filename and asserts it contains a dot.
+  - docs/store-your-passwords-in-nextcloud/
 subTitle: 'Use WebDAV to store your Keepass file in NextCloud or OwnCloud'
 embed:
   figures:
