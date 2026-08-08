@@ -12,14 +12,15 @@ version = "0.0.1-SNAPSHOT"
 
 tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "1.8"
-    kotlinOptions.freeCompilerArgs = listOf("-Xjvm-default=enable")
+    // "enable" was removed in Kotlin 1.5; "all" is the closest equivalent.
+    kotlinOptions.freeCompilerArgs = listOf("-Xjvm-default=all")
 }
 
 
 
 plugins {
     // Apply the Kotlin JVM plugin to add support for Kotlin on the JVM.
-    kotlin("jvm") version "1.4.0"
+    kotlin("jvm") version "1.9.25"
     //kotlin("kapt") version "1.3.20"
     id("io.ratpack.ratpack-java").version("1.8.0")
 
