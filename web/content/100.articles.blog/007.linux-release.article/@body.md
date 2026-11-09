@@ -4,13 +4,19 @@ MacOS app finally to Linux 🎉️ 🐧️
 
 <!--more-->
 
+!!! warning 'This post is from June 2020'
+    It describes the 1.6.3 release and the Launchpad PPA, which has not been
+    built since 2020 — `add-apt-repository ppa:codeux.design/authpass` leaves
+    you with a repository `apt` cannot read. For current instructions please
+    see the [Linux installation guide](/docs/install/linux-installation).
+
 ## Installation
 
 {{render content=node.embed.figures.ubuntuScreenshot /}}
 
 There are basically two ways to install right now. Either
 manually downloading the .tar.gz or, if you are using Ubuntu
-you can [install our PPA using Deb](https://launchpad.net/~codeux.design/+archive/ubuntu/authpass).
+you can [install from our apt repository](/docs/install/linux-installation).
 
 
 !!! warning 'Experimental'
@@ -32,14 +38,14 @@ you can [install our PPA using Deb](https://launchpad.net/~codeux.design/+archiv
 
 ### Ubuntu
 
-You can simply use the released PPA from:
-<https://launchpad.net/~codeux.design/+archive/ubuntu/authpass>
-
-Simply use the following commands:
+The Launchpad PPA this post originally described is no longer maintained; its
+last build was in 2020. AuthPass is now published through an
+[apt repository on packagecloud](https://packagecloud.io/authpass/authpass):
 
 ```shell script
-sudo add-apt-repository ppa:codeux.design/authpass
-sudo apt-get update
+# Add repository
+curl -s https://packagecloud.io/install/repositories/authpass/authpass/script.deb.sh | sudo bash
+# Install authpass
 sudo apt-get install authpass
 ```
 
